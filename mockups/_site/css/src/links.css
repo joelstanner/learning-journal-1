@@ -1,0 +1,18 @@
+
+a {
+	color: #000;
+	font-weight: var(--font-weight-medium);
+	text-decoration: none;
+	transition: 0.2s ease-in;
+}
+
+a:link,
+a:active
+a:visited {
+	color: #000;
+}
+
+a:hover {
+	color: #222;
+	transition: color 0.2s ease-out;
+}

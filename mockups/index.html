@@ -2,3 +2,26 @@
 layout: base
 title: Le' Journal
 ---
+<!-- Header -->
+<section class='mbm'>
+	<h1><a href='/'>Le Journal</a></h1>
+</section>
+
+<!-- Post list -->
+<section class='mbm'>
+
+	<table class='container'>
+		<tbody>
+			{% for post in site.posts %}
+			<tr>
+				<td><span class='push-right light'>{{ post.date | date: "%Y-%m-%d" }}</span></td>
+				<td><a class='push-right' href='{{ post.url }}'>{{ post.title }}</a></td>
+				<td><a class='book' href='{{ post.url }}/edit.html'>Edit</a></td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td class='red'><a href='/create.html' class='red'>Create</a></td>
+			</tr>
+		</tbody>
+	</table>
+</section>

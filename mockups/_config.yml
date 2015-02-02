@@ -1,0 +1,3 @@
+port: 9999
+permalinks: /post/:title/
+exclude: [/css/node_modules/]

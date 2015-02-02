@@ -2,3 +2,16 @@
 layout: base
 title: Le' Journal
 ---
+<!-- Header -->
+<section class='mbm'>
+	<h1><a href='/'>Le Journal</a></h1>
+</section>
+
+<!-- Post list -->
+<section class='mbm'>
+
+	{% for post in site.posts | limit: 1 %}
+	{{ post.content }}
+	{% endfor %}
+	<p class='red'><a href='/edit.html' class='red'>Edit</a></p>
+</section>
