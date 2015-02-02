@@ -8,7 +8,7 @@ To build the mockups:
 - Install Jekyll: `gem install jekyll`
 - Drop into the Mockups dir: `cd mockups/`
 - Build and serve the files with Jekyll: `jekyll serve --watch`
-- Point your browser to `localhost:/9999`
+- Point your browser to `localhost:9999`
 - ???
 - Profit!
 
