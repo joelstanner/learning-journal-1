@@ -2,7 +2,7 @@
 import os
 import logging
 import psycopg2
-import transaction
+import datetime
 from pyramid.config import Configurator
 from pyramid.session import SignedCookieSessionFactory
 from pyramid.view import view_config
@@ -19,6 +19,9 @@ CREATE TABLE IF NOT EXISTS entries (
     text TEXT NOT NULL,
     created TIMESTAMP NOT NULL
 )
+"""
+INSERT_ENTRY = """
+INSERT INTO entries (title, text, created) VALUES (%s, %s, %s)
 """
 
 logging.basicConfig()
@@ -59,6 +62,13 @@ def close_connection(request):
             db.commit()
         request.db.close()
 
+def write_entry(request):
+    '''Write an entry to the database'''
+    title = request.params.get('title', None)
+    text = request.params.get('text', None)
+    created = datetime.datetime.utcnow()
+    request.db.cursor().execute(INSERT_ENTRY, [title, text, created])
+
 def main():
     '''Create a configured wsgi app'''
     settings = {}
@@ -84,4 +94,3 @@ if __name__ == '__main__':
     app = main()
     port = os.environ.get('PORT', 5000)
     serve(app, host='0.0.0.0', port=port)
-
