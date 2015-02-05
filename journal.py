@@ -24,6 +24,10 @@ INSERT_ENTRY = """
 INSERT INTO entries (title, text, created) VALUES (%s, %s, %s)
 """
 
+DB_ENTRIES_LIST = """
+SELECT id, title, text, created FROM entries ORDER BY created DESC
+"""
+
 logging.basicConfig()
 log = logging.getLogger(__file__)
 
@@ -34,6 +38,14 @@ def home(request):
 def connect_db(settings):
     '''Return a connection to the configured database'''
     return psycopg2.connect(settings['db'])
+
+def read_entries(request):
+    '''Return a list of entries'''
+    cur = request.db.cursor()
+    cur.execute(DB_ENTRIES_LIST)
+    keys = ('id', 'title', 'text', 'created')
+    entries = [dict(zip(keys, row)) for row in cur.fetchall()]
+    return {'entries': entries }
 
 def init_db():
     '''Create database tables defined by DB_SCHEMA'''
