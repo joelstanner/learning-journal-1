@@ -1,0 +1,21 @@
+{% extends 'base.jinja2' %}
+
+{% block body %}
+
+    <h2>Entries</h2>
+    {% for entry in entries %}
+        <article id='entry={{ entry.id }}'>
+            <h3>{{ entry.title }}</h3>
+            <p>{{ entry.created.strftime('%b. %d, %Y') }}</p>
+
+            <section>
+                {{ entry.text | safe }}
+            </section>
+        </article>
+    {% else %}
+        <div class='entry'>
+            <p>Nothin!</p>
+        </div>
+    {% endfor %}
+
+{% endblock %
