@@ -8,6 +8,9 @@ from pyramid.session import SignedCookieSessionFactory
 from pyramid.view import view_config
 from pyramid.events import NewRequest, subscriber
 from pyramid.httpexceptions import HTTPFound, HTTPInternalServerError
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
+from cryptacular.bcrypt import BCRYPTPasswordManager
 from waitress import serve
 from contextlib import closing
 
@@ -94,28 +97,55 @@ def add_entry(request):
         return HTTPInternalServerError
     return HTTPFound(request.route_url('home'))
 
+def do_login(request):
+    username = request.params.get('username', None)
+    password = request.params.get('password', None)
+    if not (username and password):
+        raise ValueError('both username and password are required!')
+
+    settings = request.registry.settings
+    manager = BCRYPTPasswordManager()
+
+    if username == settings.get('auth.username', ''):
+        hashed = settings.get('auth.password', '')
+        return manager.check(hashed, password)
+
 def main():
     '''Create a configured wsgi app'''
+
+    manager = BCRYPTPasswordManager()
+
     settings = {}
-    settings['reload_all'] = os.environ.get('DEBUG', True)
     settings['debug_all'] = os.environ.get('DEBUG', True)
-    settings['db'] = os.environ.get(
-        'DATABASE_URL', 'dbname=learning-journal user=Jacques'
-    )
+    settings['reload_all'] = os.environ.get('DEBUG', True)
+    settings['db'] = os.environ.get('DATABASE_URL', 'dbname=learning-journal user=Jacques')
+    settings['auth.username'] = os.environ.get('AUTH_USERNAME', 'admin')
+    settings['auth.password'] = os.environ.get('AUTH_PASSWORD', manager.encode('secret'))
+
     # secret value for session signing
     secret = os.environ.get('JOURNAL_SESSION_SECRET', 'itsaseekrit')
     session_factory = SignedCookieSessionFactory(secret)
+    auth_secret = os.environ.get('JOURNAL_AUTH_SECRET', 'anotherseekrit')
+
     # configuration setup
     config = Configurator(
         settings=settings,
-        session_factory=session_factory
+        session_factory=session_factory,
+        authentication_policy=AuthTktAuthenticationPolicy(
+            secret=auth_secret,
+            hashalg='sha512'
+        ),
+        authorization_policy=ACLAuthorizationPolicy(),
     )
     config.include('pyramid_jinja2')
     config.add_route('home', '/')
     config.add_route('add', '/add')
     config.scan()
+
     app = config.make_wsgi_app()
+
     return app
+
 
 if __name__ == '__main__':
     app = main()
