@@ -55,6 +55,8 @@ def init_db():
     settings['db'] = os.environ.get(
         'DATABASE_URL', 'dbname=learning-journal user=Jacques'
     )
+    settings['auth.username'] = os.environ.get('AUTH_USERNAME', 'admin')
+    settings['auth.password'] = os.environ.get('AUTH_PASSWORD', 'secret')
     with closing(connect_db(settings)) as db:
         db.cursor().execute(DB_SCHEMA)
         db.commit()
