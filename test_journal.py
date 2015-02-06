@@ -1,6 +1,7 @@
 from contextlib import closing
 from pyramid import testing
 
+import os
 import pytest
 import datetime
 from journal import connect_db
@@ -101,3 +102,44 @@ def text_read_entries(req_context):
         assert expected[1] == entry['text']
         for key in 'id', 'created':
             assert key in entry
+
+@pytest.fixture(scope='function')
+def app(db):
+    from journal import main
+    from webtest import TestApp
+    os.environ['DATABASE_URL'] = TEST_DSN
+    app = main()
+    return TestApp(app)
+
+def test_empty_listing(app):
+    response = app.get('/')
+    assert response.status_code == 200
+
+    actual = response.body
+    expected = 'Nothin!'
+    assert expected in actual
+
+@pytest.fixture(scope='function')
+def entry(db, request):
+    '''provide a single entry in the database'''
+    settings = db
+    now = datetime.datetime.utcnow()
+    expected = ('Test Title', 'Test Text', now)
+    with closing(connect_db(settings)) as db:
+        run_query(db, INSERT_ENTRY, expected, False)
+        db.commit()
+
+    def cleanup():
+        clear_entries(settings)
+
+    request.addfinalizer(cleanup)
+
+    return expected
+
+def test_listing(app, entry):
+    response = app.get('/')
+    assert response.status_code == 200
+    actual = response.body
+    for expected in entry[:2]:
+        assert expected in actual
+
