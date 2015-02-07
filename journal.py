@@ -15,6 +15,7 @@ from cryptacular.bcrypt import BCRYPTPasswordManager
 from waitress import serve
 from contextlib import closing
 
+here = os.path.dirname(os.path.abspath(__file__))
 
 # Define Entry Schema
 DB_SCHEMA = """
@@ -161,6 +162,7 @@ def main():
         authorization_policy=ACLAuthorizationPolicy(),
     )
     config.include('pyramid_jinja2')
+    config.add_static_view('static', os.path.join(here, 'static'))
     config.add_route('home', '/')
     config.add_route('add', '/add')
     config.add_route('login', '/login')
