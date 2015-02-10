@@ -19,11 +19,13 @@
     <body>
         <div class='container'>
             <header>
-                {% if not request.authenticated_userid %}
-                <p><a href='{{ request.route_url('login') }}'>Log in</a></p>
-                {% else %}
-                <p><a href='{{ request.route_url('logout') }}'>Log out</a></p>
-                {% endif %}
+                <p class='button'>
+                    {% if not request.authenticated_userid %}
+                    <a href='{{ request.route_url('login') }}'>Log in</a>
+                    {% else %}
+                    <a href='{{ request.route_url('logout') }}'>Log out</a>
+                    {% endif %}
+                </p>
             </header>
 
             {% block body %}{% endblock %}
