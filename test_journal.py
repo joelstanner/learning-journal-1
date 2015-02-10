@@ -88,7 +88,7 @@ def test_read_entries_empty(req_context):
     assert 'entries' in result
     assert len(result['entries']) == 0
 
-def text_read_entries(req_context):
+def test_read_entries(req_context):
     now = datetime.datetime.utcnow()
     expected = ('Test Title', 'Test Text', now)
     run_query(req_context.db, INSERT_ENTRY, expected, False)
