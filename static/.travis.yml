@@ -1,0 +1,6 @@
+language: node_js
+deploy:
+  api_key:
+    secure: QAXy3sQaA8jG2hiUETRp3PmYCNh+sPpUy8vOnbH4v7z4wcKyYIXL7HzWE0o15FkhuKILiy4JAlG7rfYla7hkTi1qywjpVh4rfdEpLHfRVZMHJcQb4mggSi1jGT1uTrDdXsEXXNFcJVg1wMWSXesK1KPXo20B2xDgMuKERaixK6M=
+  email: hi@jacquestardie.org
+  provider: npm
