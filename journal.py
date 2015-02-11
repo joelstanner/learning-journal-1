@@ -2,6 +2,8 @@
 import os
 import logging
 import psycopg2
+import markdown
+import jinja2
 import datetime
 from pyramid.config import Configurator
 from pyramid.session import SignedCookieSessionFactory
@@ -35,7 +37,8 @@ DB_ENTRIES_LIST = '''
 INDIVIDUAL_ENTRY = '''
     SELECT id, title, text, created FROM entries WHERE id = %s '''
 
-
+def md(input):
+    return markdown.markdown(input)
 
 def connect_db(settings):
     '''Return a connection to the configured database'''
@@ -169,6 +172,7 @@ def main():
                 ),
             authorization_policy=ACLAuthorizationPolicy(),
             )
+    jinja2.filters.FILTERS['markdown'] = md
     config.include('pyramid_jinja2')
     config.add_static_view('static', os.path.join(here, 'static'))
     config.add_route('home', '/')
