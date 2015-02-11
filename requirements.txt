@@ -6,6 +6,7 @@ gnureadline==6.3.3
 ipython==2.4.0
 Jinja2==2.7.3
 lettuce==0.2.20
+Markdown==2.5.2
 MarkupSafe==0.23
 mock==1.0.1
 PasteDeploy==1.5.2
