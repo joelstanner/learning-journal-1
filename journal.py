@@ -3,6 +3,7 @@ import os
 import logging
 import psycopg2
 import markdown
+import pygments
 import jinja2
 import datetime
 from pyramid.config import Configurator
@@ -38,7 +39,7 @@ INDIVIDUAL_ENTRY = '''
     SELECT id, title, text, created FROM entries WHERE id = %s '''
 
 def md(input):
-    return markdown.markdown(input)
+    return markdown.markdown(input, extension=['CodeHilite'])
 
 def connect_db(settings):
     '''Return a connection to the configured database'''
@@ -100,6 +101,8 @@ def read_entries(request):
     cur.execute(DB_ENTRIES_LIST)
     keys = ('id', 'title', 'text', 'created')
     entries = [dict(zip(keys, row)) for row in cur.fetchall()]
+    for entry in entries:
+        entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
     return {'entries': entries }
 
 
@@ -110,6 +113,8 @@ def read_entry(request):
     cur.execute(INDIVIDUAL_ENTRY, [id])
     keys = ('id', 'title', 'text', 'created')
     entries = [dict(zip(keys, row)) for row in cur.fetchall()]
+    for entry in entries:
+        entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
     return {'entries': entries }
 
 @view_config(route_name='add', request_method='POST')
