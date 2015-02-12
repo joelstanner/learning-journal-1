@@ -137,10 +137,8 @@ def read(request):
     cur = request.db.cursor()
     cur.execute(INDIVIDUAL_ENTRY, [id])
     keys = ('id', 'title', 'text', 'created')
-    entries = [dict(zip(keys, row)) for row in cur.fetchall()]
-    for entry in entries:
-        entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
-    return {'entries': entries }
+    entry = dict(zip(keys, cur.fetchone()))
+    return {'entry': entry }
 
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def edit(request):
