@@ -1,8 +1,6 @@
 Feature: Journal
     Implement a CRU-able Learning Journal
 
-
-
     Scenario: At least a cat
         Given that I am a user
         When I visit the index page and there are no entries
@@ -28,8 +26,6 @@ Feature: Journal
         When I view a page
         Then code blocks should be colorized
 
-
-
     Scenario: Not an admin
         Given that I am a user
         When I view a post entry
@@ -49,8 +45,3 @@ Feature: Journal
         Given that I am an admin
         When I visit an edit-able page
         Then I should be able to write my content in Markdown
-
-    
-
-
-
