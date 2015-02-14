@@ -3,7 +3,10 @@
 
 <h3 class='upper mbl'><a href='/'>Le' journal</a></h3>
     <article id='entry={{ entry.id }}' class='mbl'>
-        <h2 class='mbn'><a href='/post/{{ entry.id }}'>{{ entry.title }}</a> <span class='light h4'>{{ entry.created.strftime('%b. %d, %Y') }}</span></h2>
+        <h2 class='mbn'>
+            <a href='/post/{{ entry.id }}'>{{ entry.title }}</a> 
+            <span class='light h4'>{{ entry.created.strftime('%b. %d, %Y') }}</span>
+        </h2>
         <section>
             {{ entry.text | markdown | safe }}
         </section>
