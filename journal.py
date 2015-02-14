@@ -196,9 +196,9 @@ def main():
         authentication_policy=AuthTktAuthenticationPolicy(
             secret=auth_secret,
             hashalg='sha512'
-            ),
+        ),
         authorization_policy=ACLAuthorizationPolicy(),
-        )
+    )
     config.include('pyramid_jinja2')
     config.add_static_view('static', os.path.join(here, 'static'))
 
