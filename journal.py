@@ -4,7 +4,6 @@ import os
 import logging
 import psycopg2
 import markdown
-import pygments
 import jinja2
 import datetime
 from datetime import date
@@ -105,7 +104,7 @@ def login(request):
             headers = remember(request, username)
             return HTTPFound(request.route_url('home'), headers=headers)
 
-    return {'error': error, 'username': username }
+    return {'error': error, 'username': username}
 
 @view_config(route_name='logout')
 def logout(request):
@@ -143,7 +142,7 @@ def read(request):
     cur.execute(INDIVIDUAL_ENTRY, [id])
     keys = ('id', 'title', 'text', 'created')
     entry = dict(zip(keys, cur.fetchone()))
-    return {'entry': entry }
+    return {'entry': entry}
 
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def edit(request):
