@@ -40,12 +40,14 @@ DB_ENTRIES_LIST = '''
 INDIVIDUAL_ENTRY = '''
     SELECT id, title, text, created FROM entries WHERE id = %s '''
 
+
 def connect_db(settings):
     return psycopg2.connect(settings['db'])
 
 def init_db():
     settings = {}
-    settings['db'] = os.environ.get('DATABASE_URL', 'dbname=learning-journal user=Jacques')
+    settings['db'] = os.environ.get(
+        'DATABASE_URL', 'dbname=learning-journal user=Joel')
     settings['auth.username'] = os.environ.get('AUTH_USERNAME', 'admin')
     settings['auth.password'] = os.environ.get('AUTH_PASSWORD', 'secret')
 
@@ -117,8 +119,11 @@ def read_entries(request):
     keys = ('id', 'title', 'text', 'created')
     entries = [dict(zip(keys, row)) for row in cur.fetchall()]
     for entry in entries:
-        entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
-    return {'entries': entries }
+        entry['text'] = (
+            markdown.markdown(entry['text'], extensions=['codehilite',
+                                                         'fenced_code'])
+        )
+    return {'entries': entries}
 
 @view_config(route_name='add', request_method='POST')
 def add(request):
@@ -157,7 +162,9 @@ def update(request):
         title = request.params.get('title', None)
         text = request.params.get('text', None)
         created = date.today()
-        ENTRY_UPDATE = "UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s;"
+        ENTRY_UPDATE = (
+            "UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s;"
+        )
         request.db.cursor().execute(ENTRY_UPDATE, [title, text, created, id])
     except psycopg2.Error:
         return HTTPInternalServerError
@@ -169,9 +176,11 @@ def main():
     settings = {}
     settings['debug_all'] = os.environ.get('DEBUG', True)
     settings['reload_all'] = os.environ.get('DEBUG', True)
-    settings['db'] = os.environ.get('DATABASE_URL', 'dbname=learning-journal user=Jacques')
+    settings['db'] = os.environ.get('DATABASE_URL',
+                                    'dbname=learning-journal user=Joel')
     settings['auth.username'] = os.environ.get('AUTH_USERNAME', 'admin')
-    settings['auth.password'] = os.environ.get('AUTH_PASSWORD', manager.encode('secret'))
+    settings['auth.password'] = os.environ.get('AUTH_PASSWORD',
+                                               manager.encode('secret'))
 
     # secret value for session signing
     secret = os.environ.get('JOURNAL_SESSION_SECRET', 'itsaseekrit')
@@ -199,7 +208,7 @@ def main():
     config.add_route('add', '/add')
     config.add_route('entry', '/post/{id}')
     config.add_route('edit', '/edit/{id}')
-    config.add_route('update','/update/{id}')
+    config.add_route('update', '/update/{id}')
     config.scan()
 
     app = config.make_wsgi_app()
