@@ -9,22 +9,26 @@ from journal import DB_SCHEMA
 from journal import INSERT_ENTRY
 from cryptacular.bcrypt import BCRYPTPasswordManager
 
-TEST_DSN = 'dbname=test_learning_journal user=Jacques'
+TEST_DSN = 'dbname=test_learning_journal user=Joel'
+
 
 def init_db(settings):
     with closing(connect_db(settings)) as db:
         db.cursor().execute(DB_SCHEMA)
         db.commit()
 
+
 def clear_db(settings):
     with closing(connect_db(settings)) as db:
         db.cursor().execute("DROP TABLE entries")
         db.commit()
 
+
 def clear_entries(settings):
     with closing(connect_db(settings)) as db:
         db.cursor().execute("DELETE FROM entries")
         db.commit()
+
 
 def run_query(db, query, params=(), get_results=True):
     cursor = db.cursor()
@@ -35,6 +39,7 @@ def run_query(db, query, params=(), get_results=True):
     if get_results:
         results = cursor.fetchall()
     return results
+
 
 @pytest.fixture(scope='session')
 def db(request):
@@ -49,6 +54,7 @@ def db(request):
 
     return settings
 
+
 @pytest.yield_fixture(scope='function')
 def req_context(db, request):
     '''Mock a request with a database attached.'''
@@ -61,6 +67,7 @@ def req_context(db, request):
 
         # After the test has run, clear out the entries
         clear_entries(settings)
+
 
 def test_write_entry(req_context):
     from journal import write_entry
@@ -82,11 +89,13 @@ def test_write_entry(req_context):
     for idx, val in enumerate(expected):
         assert val == actual[idx]
 
+
 def test_read_entries_empty(req_context):
     from journal import read_entries
     result = read_entries(req_context)
     assert 'entries' in result
     assert len(result['entries']) == 0
+
 
 def text_read_entries(req_context):
     now = datetime.datetime.utcnow()
@@ -104,6 +113,7 @@ def text_read_entries(req_context):
         for key in 'id', 'created':
             assert key in entry
 
+
 @pytest.fixture(scope='function')
 def app(db):
     from journal import main
@@ -112,6 +122,7 @@ def app(db):
     app = main()
     return TestApp(app)
 
+
 def test_empty_listing(app):
     response = app.get('/')
     assert response.status_code == 200
@@ -119,6 +130,7 @@ def test_empty_listing(app):
     actual = response.body
     expected = 'Nothin!'
     assert expected in actual
+
 
 @pytest.fixture(scope='function')
 def entry(db, request):
@@ -137,12 +149,14 @@ def entry(db, request):
 
     return expected
 
+
 def test_listing(app, entry):
     response = app.get('/')
     assert response.status_code == 200
     actual = response.body
     for expected in entry[:2]:
         assert expected in actual
+
 
 def test_post_to_add_view(app):
     entry_data = {
@@ -156,6 +170,7 @@ def test_post_to_add_view(app):
         assert expected in actual
 
 # TODO: Add test for app.get('/add')
+
 
 @pytest.fixture(scope='function')
 def auth_req(request):
@@ -174,20 +189,24 @@ def auth_req(request):
     request.addfinalizer(cleanup)
     return req
 
+
 def test_do_login_success(auth_req):
     from journal import do_login
     auth_req.params = {'username': 'admin', 'password': 'secret'}
     assert do_login(auth_req)
+
 
 def test_do_login_bad_pass(auth_req):
     from journal import do_login
     auth_req.params = {'username': 'admin', 'password': 'wrong'}
     assert not do_login(auth_req)
 
+
 def test_do_login_bad_user(auth_req):
     from journal import do_login
     auth_req.params = {'username': 'bad', 'password': 'secret'}
     assert not do_login(auth_req)
+
 
 def test_do_login_missing_params(auth_req):
     from journal import do_login
@@ -199,15 +218,18 @@ def test_do_login_missing_params(auth_req):
 
 INPUT_BTN = "<input type='submit' value='Add post' name='Add post' />"
 
+
 def login_helper(username, password, app):
     '''encapsulate app login for reuse in later tests'''
     login_data = { 'username': username, 'password': password }
     return app.post('/login', params=login_data, status='*')
 
+
 def test_start_as_anon(app):
     response = app.get('/', status=200)
     actual = response.body
     assert INPUT_BTN not in actual
+
 
 def test_login_success(app):
     username, password = ('admin', 'secret')
@@ -218,6 +240,7 @@ def test_login_success(app):
     actual = response.body
     assert INPUT_BTN in actual
 
+
 def test_login_fails(app):
     username, password = ('admin', 'wrong')
     response = login_helper(username, password, app)
@@ -225,6 +248,7 @@ def test_login_fails(app):
     actual = response.body
     assert "Login Failed" in actual
     assert INPUT_BTN not in actual
+
 
 def test_logout(app):
     # Re-use existing code to ensure we are logged out when we begin.

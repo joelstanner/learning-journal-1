@@ -34,13 +34,13 @@ DB_SCHEMA = '''
         created TIMESTAMP NOT NULL
     ) '''
 INSERT_ENTRY = '''
-    INSERT INTO entries (title, text, created) VALUES (%s, %s, %s) '''
+    INSERT INTO entries (title, text, created) VALUES (%s, %s, %s); '''
 DB_ENTRIES_LIST = '''
-    SELECT id, title, text, created FROM entries ORDER BY created DESC '''
+    SELECT id, title, text, created FROM entries ORDER BY created DESC; '''
 INDIVIDUAL_ENTRY = '''
-    SELECT id, title, text, created FROM entries WHERE id = %s '''
+    SELECT id, title, text, created FROM entries WHERE id = %s; '''
 ENTRY_UPDATE = '''
-    UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s '''
+    UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s; '''
 
 
 def connect_db(settings):
@@ -188,17 +188,22 @@ def edit(request):
         raise HTTPForbidden
 
 
-@view_config(route_name='update', request_method='POST')
 def update(request, entry_id):
+    """Helper to update the database"""
+    title = request.params['title']
+    text = request.params['text']
+    created = datetime.datetime.today()
+    request.db.cursor().execute(
+        ENTRY_UPDATE, [title, text, created, entry_id]
+    )
+
+
+@view_config(route_name='update', request_method='POST')
+def update_entry(request):
     """Update an entry in the database"""
+    entry_id = request.matchdict.get('id', -1)
     try:
-        entry_id = request.matchdict.get('id', -1)
-        title = request.params.get('title', None)
-        text = request.params.get('text', None)
-        created = date.today()
-        request.db.cursor().execute(
-            ENTRY_UPDATE, [title, text, created, entry_id]
-        )
+        update(request, entry_id)
     except psycopg2.Error:
         return HTTPInternalServerError
     return HTTPFound(request.route_url('home'))
