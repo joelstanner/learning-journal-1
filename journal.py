@@ -39,13 +39,17 @@ DB_ENTRIES_LIST = '''
     SELECT id, title, text, created FROM entries ORDER BY created DESC '''
 INDIVIDUAL_ENTRY = '''
     SELECT id, title, text, created FROM entries WHERE id = %s '''
+ENTRY_UPDATE = '''
+    UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s '''
 
 
 def connect_db(settings):
+    """Create a connection to the database"""
     return psycopg2.connect(settings['db'])
 
 
 def init_db():
+    """Create database dables defined by DB_SCHEMA"""
     settings = {}
     settings['db'] = os.environ.get(
         'DATABASE_URL', 'dbname=learning-journal user=Joel')
@@ -57,7 +61,17 @@ def init_db():
         db.commit()
 
 
+@subscriber(NewRequest)
+def open_connection(event):
+    """Open a connection to the database"""
+    request = event.request
+    settings = request.registry.settings
+    request.db = connect_db(settings)
+    request.add_finished_callback(close_connection)
+
+
 def close_connection(request):
+    """Close the db connection for this request"""
     db = getattr(request, 'db', None)
     if db is not None:
         if request.exception is not None:
@@ -68,6 +82,7 @@ def close_connection(request):
 
 
 def do_login(request):
+    """Authenticate the user"""
     username = request.params.get('username', None)
     password = request.params.get('password', None)
     if not (username and password):
@@ -80,14 +95,6 @@ def do_login(request):
         hashed = settings.get('auth.password', '')
 
     return manager.check(hashed, password)
-
-
-@subscriber(NewRequest)
-def open_connection(event):
-    request = event.request
-    settings = request.registry.settings
-    request.db = connect_db(settings)
-    request.add_finished_callback(close_connection)
 
 
 def md(input):
@@ -116,12 +123,14 @@ def login(request):
 
 @view_config(route_name='logout')
 def logout(request):
+    """Logout the user"""
     headers = forget(request)
     return HTTPFound(request.route_url('home'), headers=headers)
 
 
 @view_config(route_name='home', renderer='templates/list.jinja2')
 def read_entries(request):
+    """return a list of entries as a dict"""
     cur = request.db.cursor()
     cur.execute(DB_ENTRIES_LIST)
     keys = ('id', 'title', 'text', 'created')
@@ -136,6 +145,7 @@ def read_entries(request):
 
 @view_config(route_name='add', request_method='POST')
 def add(request):
+    """add an entry to the database"""
     try:
         title = request.params.get('title', None)
         text = request.params.get('text', None)
@@ -148,9 +158,10 @@ def add(request):
 
 @view_config(route_name='entry', renderer='templates/entry.jinja2')
 def read(request):
-    id = request.matchdict.get('id', None)
+    """return a list of one entry as a dict"""
+    entry_id = request.matchdict.get('id', None)
     cur = request.db.cursor()
-    cur.execute(INDIVIDUAL_ENTRY, [id])
+    cur.execute(INDIVIDUAL_ENTRY, [entry_id])
     keys = ('id', 'title', 'text', 'created')
     entry = dict(zip(keys, cur.fetchone()))
     return {'entry': entry}
@@ -159,9 +170,9 @@ def read(request):
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def edit(request):
     """return a list of all entries as dicts"""
-    id = request.matchdict.get('id', -1)
+    entry_id = request.matchdict.get('id', -1)
     cursor = request.db.cursor()
-    cursor.execute(INDIVIDUAL_ENTRY, (id,))
+    cursor.execute(INDIVIDUAL_ENTRY, (entry_id,))
     keys = ('id', 'title', 'text', 'created')
     entries = [dict(zip(keys, row)) for row in cursor.fetchall()]
     return {'entries': entries}
@@ -169,21 +180,22 @@ def edit(request):
 
 @view_config(route_name='update', request_method='POST')
 def update(request):
+    """Update an entry in the database"""
     try:
-        id = request.matchdict.get('id', -1)
+        entry_id = request.matchdict.get('id', -1)
         title = request.params.get('title', None)
         text = request.params.get('text', None)
         created = date.today()
-        ENTRY_UPDATE = (
-            "UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s;"
+        request.db.cursor().execute(
+            ENTRY_UPDATE, [title, text, created, entry_id]
         )
-        request.db.cursor().execute(ENTRY_UPDATE, [title, text, created, id])
     except psycopg2.Error:
         return HTTPInternalServerError
     return HTTPFound(request.route_url('home'))
 
 
 def main():
+    """Create a configured wsgi app"""
     manager = BCRYPTPasswordManager()
 
     settings = {}
