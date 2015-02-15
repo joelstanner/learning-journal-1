@@ -6,7 +6,7 @@ import psycopg2
 import markdown
 import jinja2
 import datetime
-from datetime import date
+import pytest
 
 from pyramid.config import Configurator
 from pyramid.session import SignedCookieSessionFactory
@@ -47,7 +47,7 @@ INDIVIDUAL_ENTRY = '''
 '''
 
 ENTRY_UPDATE = '''
-    UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s
+    UPDATE entries SET title=%s, text=%s, created=%s WHERE id= %s
 '''
 
 
@@ -105,9 +105,10 @@ def do_login(request):
 
 
 def get_entry(request):
+    """Get a single entry from the DB"""
     param = (request.matchdict.get('id', -1),)
     cursor = request.db.cursor()
-    cursor.execute(DB_ENTRIES_LIST, param)
+    cursor.execute(INDIVIDUAL_ENTRY, param)
     keys = ('id', 'title', 'text', 'created')
     return [dict(zip(keys, cursor.fetchone()))]
 
@@ -253,8 +254,8 @@ def main():
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
     config.add_route('add', '/add')
-    config.add_route('entry', '/post/{id}')
-    config.add_route('edit', '/edit/{id}')
+    config.add_route('entry', '/post/{id:\d+}')
+    config.add_route('edit', '/edit/{id:\d+}')
     config.add_route('update', '/update/{id}')
     config.scan()
 
