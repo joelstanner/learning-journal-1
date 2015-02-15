@@ -6,7 +6,10 @@
 
 {% for entry in entries %}
 <article id='entry={{ entry.id }}' class='mbl'>
-    <h2 class='mbn'><a href='/post/{{ entry.id }}'>{{ entry.title }}</a>
+    <h2 class='mbn'>
+        <a href='{{ request.route_url('entry', id=entry.id) }}'>
+            {{ entry.title }}
+        </a>
         <span class='light h4'>{{ entry.created.strftime('%b. %d, %Y') }}</span>
     </h2>
     <section>
