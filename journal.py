@@ -180,6 +180,8 @@ def read(request):
     cur.execute(INDIVIDUAL_ENTRY, [entry_id])
     keys = ('id', 'title', 'text', 'created')
     entry = dict(zip(keys, cur.fetchone()))
+    entry['text'] = markdown.markdown(entry['text'],
+                                      extensions=['codehilite', 'fenced_code'])
     return {'entry': entry}
 
 
