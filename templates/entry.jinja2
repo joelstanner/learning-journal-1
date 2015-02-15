@@ -10,6 +10,8 @@
         <section>
             {{ entry.text | markdown | safe }}
         </section>
-        <p class='edit'><a href='/edit/{{ entry.id }}'>Edit</a></p>
+        {% if request.authenticated_userid %}
+            <p class='edit'><a href='/edit/{{ entry.id }}'>Edit</a></p>
+        {% endif %}
     </article>
 {% endblock %}
