@@ -33,14 +33,22 @@ DB_SCHEMA = '''
         text TEXT NOT NULL,
         created TIMESTAMP NOT NULL
     ) '''
+
 INSERT_ENTRY = '''
-    INSERT INTO entries (title, text, created) VALUES (%s, %s, %s); '''
+    INSERT INTO entries (title, text, created) VALUES (%s, %s, %s)
+'''
+
 DB_ENTRIES_LIST = '''
-    SELECT id, title, text, created FROM entries ORDER BY created DESC; '''
+    SELECT id, title, text, created FROM entries ORDER BY created DESC
+'''
+
 INDIVIDUAL_ENTRY = '''
-    SELECT id, title, text, created FROM entries WHERE id = %s; '''
+    SELECT id, title, text, created FROM entries WHERE id = %s
+'''
+
 ENTRY_UPDATE = '''
-    UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s; '''
+    UPDATE entries SET title=%s, text=%s, created=%s WHERE id=%s
+'''
 
 
 def connect_db(settings):
