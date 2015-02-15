@@ -172,7 +172,7 @@ def add(request):
             return HTTPInternalServerError
         return HTTPFound(request.route_url('home'))
     else:
-        return HTTPForbidden
+        raise HTTPForbidden
 
 
 @view_config(route_name='entry', renderer='templates/entry.jinja2')
