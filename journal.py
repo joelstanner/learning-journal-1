@@ -170,12 +170,15 @@ def read(request):
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def edit(request):
     """return a list of all entries as dicts"""
-    entry_id = request.matchdict.get('id', -1)
-    cursor = request.db.cursor()
-    cursor.execute(INDIVIDUAL_ENTRY, (entry_id,))
-    keys = ('id', 'title', 'text', 'created')
-    entries = [dict(zip(keys, row)) for row in cursor.fetchall()]
-    return {'entries': entries}
+    if request.authenticated_userid:
+        entry_id = request.matchdict.get('id', -1)
+        cursor = request.db.cursor()
+        cursor.execute(INDIVIDUAL_ENTRY, (entry_id,))
+        keys = ('id', 'title', 'text', 'created')
+        entries = [dict(zip(keys, row)) for row in cursor.fetchall()]
+        return {'entries': entries}
+    else:
+        raise HTTPForbidden
 
 
 @view_config(route_name='update', request_method='POST')
