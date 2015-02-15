@@ -97,6 +97,14 @@ def do_login(request):
     return manager.check(hashed, password)
 
 
+def get_entry(request):
+    param = (request.matchdict.get('id', -1),)
+    cursor = request.db.cursor()
+    cursor.execute(DB_ENTRIES_LIST, param)
+    keys = ('id', 'title', 'text', 'created')
+    return [dict(zip(keys, cursor.fetchone()))]
+
+
 def md(input):
     return markdown.markdown(input, extention=['CodeHilite'])
 
@@ -171,18 +179,17 @@ def read(request):
 def edit(request):
     """return a list of all entries as dicts"""
     if request.authenticated_userid:
-        entry_id = request.matchdict.get('id', -1)
-        cursor = request.db.cursor()
-        cursor.execute(INDIVIDUAL_ENTRY, (entry_id,))
-        keys = ('id', 'title', 'text', 'created')
-        entries = [dict(zip(keys, row)) for row in cursor.fetchall()]
-        return {'entries': entries}
+        entry = {'entries': get_entry(request)}
+        if request.method == 'POST':
+            update(request, request.matchdict.get('id', -1))
+            return HTTPFound(request.route_url('home'))
+        return entry
     else:
         raise HTTPForbidden
 
 
 @view_config(route_name='update', request_method='POST')
-def update(request):
+def update(request, entry_id):
     """Update an entry in the database"""
     try:
         entry_id = request.matchdict.get('id', -1)
