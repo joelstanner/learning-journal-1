@@ -12,7 +12,8 @@ from pyramid.config import Configurator
 from pyramid.session import SignedCookieSessionFactory
 from pyramid.view import view_config
 from pyramid.events import NewRequest, subscriber
-from pyramid.httpexceptions import HTTPFound, HTTPInternalServerError
+from pyramid.httpexceptions import (HTTPFound,
+                                    HTTPInternalServerError, HTTPForbidden)
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.security import remember, forget
@@ -43,6 +44,7 @@ INDIVIDUAL_ENTRY = '''
 def connect_db(settings):
     return psycopg2.connect(settings['db'])
 
+
 def init_db():
     settings = {}
     settings['db'] = os.environ.get(
@@ -54,6 +56,7 @@ def init_db():
         db.cursor().execute(DB_SCHEMA)
         db.commit()
 
+
 def close_connection(request):
     db = getattr(request, 'db', None)
     if db is not None:
@@ -62,6 +65,7 @@ def close_connection(request):
         else:
             db.commit()
         request.db.close()
+
 
 def do_login(request):
     username = request.params.get('username', None)
@@ -77,6 +81,7 @@ def do_login(request):
 
     return manager.check(hashed, password)
 
+
 @subscriber(NewRequest)
 def open_connection(event):
     request = event.request
@@ -84,8 +89,10 @@ def open_connection(event):
     request.db = connect_db(settings)
     request.add_finished_callback(close_connection)
 
+
 def md(input):
     return markdown.markdown(input)
+
 
 @view_config(route_name='login', renderer='templates/login.jinja2')
 def login(request):
@@ -106,10 +113,12 @@ def login(request):
 
     return {'error': error, 'username': username}
 
+
 @view_config(route_name='logout')
 def logout(request):
     headers = forget(request)
     return HTTPFound(request.route_url('home'), headers=headers)
+
 
 @view_config(route_name='home', renderer='templates/list.jinja2')
 def read_entries(request):
@@ -124,6 +133,7 @@ def read_entries(request):
         )
     return {'entries': entries}
 
+
 @view_config(route_name='add', request_method='POST')
 def add(request):
     try:
@@ -135,6 +145,7 @@ def add(request):
         return HTTPInternalServerError
     return HTTPFound(request.route_url('home'))
 
+
 @view_config(route_name='entry', renderer='templates/entry.jinja2')
 def read(request):
     id = request.matchdict.get('id', None)
@@ -143,6 +154,7 @@ def read(request):
     keys = ('id', 'title', 'text', 'created')
     entry = dict(zip(keys, cur.fetchone()))
     return {'entry': entry}
+
 
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def edit(request):
@@ -153,6 +165,7 @@ def edit(request):
     keys = ('id', 'title', 'text', 'created')
     entries = [dict(zip(keys, row)) for row in cursor.fetchall()]
     return {'entries': entries}
+
 
 @view_config(route_name='update', request_method='POST')
 def update(request):
@@ -168,6 +181,7 @@ def update(request):
     except psycopg2.Error:
         return HTTPInternalServerError
     return HTTPFound(request.route_url('home'))
+
 
 def main():
     manager = BCRYPTPasswordManager()
