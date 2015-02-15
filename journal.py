@@ -98,7 +98,7 @@ def do_login(request):
 
 
 def md(input):
-    return markdown.markdown(input)
+    return markdown.markdown(input, extention=['CodeHilite'])
 
 
 @view_config(route_name='login', renderer='templates/login.jinja2')
