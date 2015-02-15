@@ -78,7 +78,7 @@ def test_write_entry(req_context):
     # assert that there are no entries when we start
     rows = run_query(req_context.db, "SELECT * FROM entries")
     assert len(rows) == 0
-    add(req_context)
+    result = add(req_context)
     # manually commit so we can see the entry on query
     req_context.db.commit()
 

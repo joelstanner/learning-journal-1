@@ -162,14 +162,17 @@ def read_entries(request):
 @view_config(route_name='add', request_method='POST')
 def add(request):
     """add an entry to the database"""
-    try:
-        title = request.params.get('title', None)
-        text = request.params.get('text', None)
-        created = datetime.datetime.utcnow()
-        request.db.cursor().execute(INSERT_ENTRY, [title, text, created])
-    except psycopg2.Error:
-        return HTTPInternalServerError
-    return HTTPFound(request.route_url('home'))
+    if request.authenticated_userid:
+        try:
+            title = request.params.get('title', None)
+            text = request.params.get('text', None)
+            created = datetime.datetime.utcnow()
+            request.db.cursor().execute(INSERT_ENTRY, [title, text, created])
+        except psycopg2.Error:
+            return HTTPInternalServerError
+        return HTTPFound(request.route_url('home'))
+    else:
+        return HTTPForbidden
 
 
 @view_config(route_name='entry', renderer='templates/entry.jinja2')
@@ -180,8 +183,8 @@ def read(request):
     cur.execute(INDIVIDUAL_ENTRY, [entry_id])
     keys = ('id', 'title', 'text', 'created')
     entry = dict(zip(keys, cur.fetchone()))
-    entry['text'] = markdown.markdown(entry['text'],
-                                      extensions=['codehilite', 'fenced_code'])
+    entry['text'] = markdown.markdown(
+        entry['text'], extensions=['codehilite', 'fenced_code'])
     return {'entry': entry}
 
 
