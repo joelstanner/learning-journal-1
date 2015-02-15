@@ -4,14 +4,18 @@
 <h3 class='upper mbl'><a href='/'>Le' journal</a></h3>
     <article id='entry={{ entry.id }}' class='mbl'>
         <h2 class='mbn'>
-            <a href='/post/{{ entry.id }}'>{{ entry.title }}</a> 
+            <a href='{{ request.route_url('entry', id=entry.id) }}'>
+                {{ entry.title }}
+            </a> 
             <span class='light h4'>{{ entry.created.strftime('%b. %d, %Y') }}</span>
         </h2>
         <section>
             {{ entry.text | markdown | safe }}
         </section>
         {% if request.authenticated_userid %}
-            <p class='edit'><a href='/edit/{{ entry.id }}'>Edit</a></p>
+            <p class='edit'>
+                <a href='{{ request.route_url('edit', id=entry.id) }}'>Edit</a>
+            </p>
         {% endif %}
     </article>
 {% endblock %}
