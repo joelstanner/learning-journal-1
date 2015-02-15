@@ -93,8 +93,7 @@ def do_login(request):
 
     if username == settings.get('auth.username', ''):
         hashed = settings.get('auth.password', '')
-
-    return manager.check(hashed, password)
+        return manager.check(hashed, password)
 
 
 def get_entry(request):
@@ -192,7 +191,7 @@ def update(request, entry_id):
     """Helper to update the database"""
     title = request.params['title']
     text = request.params['text']
-    created = datetime.datetime.today()
+    created = datetime.datetime.utcnow()
     request.db.cursor().execute(
         ENTRY_UPDATE, [title, text, created, entry_id]
     )

@@ -70,7 +70,7 @@ def req_context(db, request):
 
 
 def test_write_entry(req_context):
-    from journal import write_entry
+    from journal import add
     fields = ('title', 'text')
     expected = ('Test Title', 'Test Text')
     req_context.params = dict(zip(fields, expected))
@@ -78,8 +78,8 @@ def test_write_entry(req_context):
     # assert that there are no entries when we start
     rows = run_query(req_context.db, "SELECT * FROM entries")
     assert len(rows) == 0
-
-    result = write_entry(req_context)
+    set_trace()
+    add(req_context)
     # manually commit so we can see the entry on query
     req_context.db.commit()
 
@@ -216,7 +216,7 @@ def test_do_login_missing_params(auth_req):
             do_login(auth_req)
 
 
-INPUT_BTN = "<input type='submit' value='Add post' name='Add post' />"
+INPUT_BTN = "<input class='display-block' type='submit' value='Add post' name='Add post' />"
 
 
 def login_helper(username, password, app):

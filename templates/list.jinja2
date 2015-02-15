@@ -6,7 +6,9 @@
 
 {% for entry in entries %}
 <article id='entry={{ entry.id }}' class='mbl'>
-    <h2 class='mbn'><a href='/post/{{ entry.id }}'>{{ entry.title }}</a> <span class='light h4'>{{ entry.created.strftime('%b. %d, %Y') }}</span></h2>
+    <h2 class='mbn'><a href='/post/{{ entry.id }}'>{{ entry.title }}</a>
+        <span class='light h4'>{{ entry.created.strftime('%b. %d, %Y') }}</span>
+    </h2>
     <section>
         {{ entry.text | markdown | safe }}
     </section>
@@ -20,8 +22,11 @@
 {% if request.authenticated_userid %}
 <aside>
     <form action="{{ request.route_url('add') }}" method="POST" class="add_entry">
-        <input class='display-block' type='text' name='title' id='title' placeholder='Post title' />
-        <textarea class='display-block' name='text' id='text' placeholder='Write your content'></textarea>
+        <input class='display-block' type='text' name='title'
+               id='title' placeholder='Post title' />
+        <textarea class='display-block' name='text'
+                  id='text' placeholder='Write your content'>
+        </textarea>
         <input class='display-block' type='submit' value='Add post' name='Add post' />
     </form>
 </aside>
