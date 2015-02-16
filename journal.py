@@ -36,10 +36,10 @@ INDIVIDUAL_ENTRY = '''
     SELECT id, title, text, created FROM entries WHERE id = %s '''
 
 
-
 def connect_db(settings):
     '''Return a connection to the configured database'''
     return psycopg2.connect(settings['db'])
+
 
 def init_db():
     '''Create database tables defined by DB_SCHEMA'''
@@ -53,6 +53,7 @@ def init_db():
         db.cursor().execute(DB_SCHEMA)
         db.commit()
 
+
 def close_connection(request):
     '''Close the database connection for this request.'''
     db = getattr(request, 'db', None)
@@ -62,6 +63,7 @@ def close_connection(request):
         else:
             db.commit()
         request.db.close()
+
 
 def do_login(request):
     username = request.params.get('username', None)
@@ -77,12 +79,14 @@ def do_login(request):
 
     return manager.check(hashed, password)
 
+
 @subscriber(NewRequest)
 def open_connection(event):
     request = event.request
     settings = request.registry.settings
     request.db = connect_db(settings)
     request.add_finished_callback(close_connection)
+
 
 def write_entry(request):
     title = request.params.get('title', None)
@@ -97,7 +101,7 @@ def read_entries(request):
     cur.execute(DB_ENTRIES_LIST)
     keys = ('id', 'title', 'text', 'created')
     entries = [dict(zip(keys, row)) for row in cur.fetchall()]
-    return {'entries': entries }
+    return {'entries': entries}
 
 
 @view_config(route_name='entry', renderer='templates/list.jinja2')
@@ -107,7 +111,8 @@ def read_entry(request):
     cur.execute(INDIVIDUAL_ENTRY, [id])
     keys = ('id', 'title', 'text', 'created')
     entries = [dict(zip(keys, row)) for row in cur.fetchall()]
-    return {'entries': entries }
+    return {'entries': entries}
+
 
 @view_config(route_name='add', request_method='POST')
 def add_entry(request):
@@ -117,6 +122,7 @@ def add_entry(request):
         return HTTPInternalServerError
 
     return HTTPFound(request.route_url('home'))
+
 
 @view_config(route_name='login', renderer='templates/login.jinja2')
 def login(request):
@@ -135,12 +141,14 @@ def login(request):
             headers = remember(request, username)
             return HTTPFound(request.route_url('home'), headers=headers)
 
-    return {'error': error, 'username': username }
+    return {'error': error, 'username': username}
+
 
 @view_config(route_name='logout')
 def logout(request):
     headers = forget(request)
     return HTTPFound(request.route_url('home'), headers=headers)
+
 
 def main():
     '''Create a configured wsgi app'''
@@ -150,9 +158,11 @@ def main():
     settings = {}
     settings['debug_all'] = os.environ.get('DEBUG', True)
     settings['reload_all'] = os.environ.get('DEBUG', True)
-    settings['db'] = os.environ.get('DATABASE_URL', 'dbname=learning-journal user=Jacques')
+    settings['db'] = os.environ.get(
+            'DATABASE_URL', 'dbname=learning-journal user=Jacques')
     settings['auth.username'] = os.environ.get('AUTH_USERNAME', 'admin')
-    settings['auth.password'] = os.environ.get('AUTH_PASSWORD', manager.encode('secret'))
+    settings['auth.password'] = os.environ.get(
+            'AUTH_PASSWORD', manager.encode('secret'))
 
     # secret value for session signing
     secret = os.environ.get('JOURNAL_SESSION_SECRET', 'itsaseekrit')
