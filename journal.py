@@ -13,7 +13,7 @@ from pyramid.config import Configurator
 from pyramid.session import SignedCookieSessionFactory
 from pyramid.view import view_config
 from pyramid.events import NewRequest, subscriber
-from pyramid.httpexceptions import HTTPFound, HTTPInternalServerError
+from pyramid.httpexceptions import HTTPFound, HTTPInternalServerError, HTTPForbidden
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.security import remember, forget
@@ -117,7 +117,7 @@ def read_entries(request):
     return {'entries': entries}
 
 
-@view_config(route_name='entry', renderer='templates/list.jinja2')
+@view_config(route_name='entry', renderer='templates/entry.jinja2')
 def read_entry(request):
     id = request.matchdict.get('id', None)
     cursor = request.db.cursor()
@@ -130,23 +130,28 @@ def read_entry(request):
 @view_config(route_name='edit', renderer='templates/edit.jinja2')
 def edit(request):
     """return a list of all entries as dicts"""
-    id = request.matchdict.get('id', None)
-    cursor = request.db.cursor()
-    cursor.execute(INDIVIDUAL_ENTRY, (id,))
-    keys = ('id', 'title', 'text', 'created')
-    entry = dict(zip(keys, cursor.fetchone()))
-    entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
-    return {'entry': entry}
+    if request.authenticated_userid:
+        id = request.matchdict.get('id', None)
+        cursor = request.db.cursor()
+        cursor.execute(INDIVIDUAL_ENTRY, (id,))
+        keys = ('id', 'title', 'text', 'created')
+        entry = dict(zip(keys, cursor.fetchone()))
+        entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
+        return {'entry': entry}
+    else:
+        return HTTPForbidden()
 
 
 @view_config(route_name='add', request_method='POST')
 def add_entry(request):
-    try:
-        write_entry(request)
-    except psycopg2.Error:
-        return HTTPInternalServerError
-
-    return HTTPFound(request.route_url('home'))
+    if request.authenticated_userid:
+        try:
+            write_entry(request)
+        except psycopg2.Error:
+            return HTTPInternalServerError
+        return HTTPFound(request.route_url('home'))
+    else:
+        return HTTPForbidden()
 
 
 @view_config(route_name='login', renderer='templates/login.jinja2')
@@ -161,11 +166,9 @@ def login(request):
             authenticated = do_login(request)
         except ValueError as e:
             error = str(e)
-
         if authenticated:
             headers = remember(request, username)
             return HTTPFound(request.route_url('home'), headers=headers)
-
     return {'error': error, 'username': username}
 
 

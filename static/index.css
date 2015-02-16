@@ -9,7 +9,7 @@ html {
 	/* 1 */
 	-ms-text-size-adjust: 100%;
 	/* 2 */
-	-webkit-text-size-adjust: 100%
+	-webkit-text-size-adjust: 100%;
 	/* 2 */
 
 }
@@ -17,7 +17,7 @@ html {
  * Remove default margin.
  */
 body {
-	margin: 0
+	margin: 0;
 
 }
 /* HTML5 display definitions
@@ -41,7 +41,7 @@ menu,
 nav,
 section,
 summary {
-	display: block
+	display: block;
 
 }
 /**
@@ -54,7 +54,7 @@ progress,
 video {
 	display: inline-block;
 	/* 1 */
-	vertical-align: baseline
+	vertical-align: baseline;
 	/* 2 */
 
 }
@@ -64,7 +64,7 @@ video {
  */
 audio:not([controls]) {
 	display: none;
-	height: 0
+	height: 0;
 
 }
 /**
@@ -73,7 +73,7 @@ audio:not([controls]) {
  */
 [hidden],
 template {
-	display: none
+	display: none;
 
 }
 /* Links
@@ -82,7 +82,7 @@ template {
  * Remove the gray background color from active links in IE 10.
  */
 a {
-	background-color: transparent
+	background-color: transparent;
 
 }
 /**
@@ -90,7 +90,7 @@ a {
  */
 a:active,
 a:hover {
-	outline: 0
+	outline: 0;
 
 }
 /* Text-level semantics
@@ -99,7 +99,7 @@ a:hover {
  * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
  */
 abbr[title] {
-	border-bottom: 1px dotted
+	border-bottom: 1px dotted;
 
 }
 /**
@@ -107,14 +107,14 @@ abbr[title] {
  */
 b,
 strong {
-	font-weight: bold
+	font-weight: bold;
 
 }
 /**
  * Address styling not present in Safari and Chrome.
  */
 dfn {
-	font-style: italic
+	font-style: italic;
 
 }
 /**
@@ -123,7 +123,7 @@ dfn {
  */
 h1 {
 	font-size: 2em;
-	margin: 0.67em 0
+	margin: 0.67em 0;
 
 }
 /**
@@ -131,14 +131,14 @@ h1 {
  */
 mark {
 	background: #ff0;
-	color: #000
+	color: #000;
 
 }
 /**
  * Address inconsistent and variable font size in all browsers.
  */
 small {
-	font-size: 80%
+	font-size: 80%;
 
 }
 /**
@@ -149,15 +149,15 @@ sup {
 	font-size: 75%;
 	line-height: 0;
 	position: relative;
-	vertical-align: baseline
+	vertical-align: baseline;
 
 }
 sup {
-	top: -0.5em
+	top: -0.5em;
 
 }
 sub {
-	bottom: -0.25em
+	bottom: -0.25em;
 
 }
 /* Embedded content
@@ -166,14 +166,14 @@ sub {
  * Remove border when inside `a` element in IE 8/9/10.
  */
 img {
-	border: 0
+	border: 0;
 
 }
 /**
  * Correct overflow not hidden in IE 9/10/11.
  */
 svg:not(:root) {
-	overflow: hidden
+	overflow: hidden;
 
 }
 /* Grouping content
@@ -182,7 +182,7 @@ svg:not(:root) {
  * Address margin not present in IE 8/9 and Safari.
  */
 figure {
-	margin: 1em 40px
+	margin: 1em 40px;
 
 }
 /**
@@ -190,14 +190,14 @@ figure {
  */
 hr {
 	box-sizing: content-box;
-	height: 0
+	height: 0;
 
 }
 /**
  * Contain overflow in all browsers.
  */
 pre {
-	overflow: auto
+	overflow: auto;
 
 }
 /**
@@ -208,7 +208,7 @@ kbd,
 pre,
 samp {
 	font-family: monospace, monospace;
-	font-size: 1em
+	font-size: 1em;
 
 }
 /* Forms
@@ -232,7 +232,7 @@ textarea {
 	/* 1 */
 	font: inherit;
 	/* 2 */
-	margin: 0
+	margin: 0;
 	/* 3 */
 
 }
@@ -240,7 +240,7 @@ textarea {
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
  */
 button {
-	overflow: visible
+	overflow: visible;
 
 }
 /**
@@ -251,7 +251,7 @@ button {
  */
 button,
 select {
-	text-transform: none
+	text-transform: none;
 
 }
 /**
@@ -267,7 +267,7 @@ input[type="reset"],
 input[type="submit"] {
 	-webkit-appearance: button;
 	/* 2 */
-	cursor: pointer
+	cursor: pointer;
 	/* 3 */
 
 }
@@ -276,7 +276,7 @@ input[type="submit"] {
  */
 button[disabled],
 html input[disabled] {
-	cursor: default
+	cursor: default;
 
 }
 /**
@@ -285,7 +285,7 @@ html input[disabled] {
 button::-moz-focus-inner,
 input::-moz-focus-inner {
 	border: 0;
-	padding: 0
+	padding: 0;
 
 }
 /**
@@ -293,7 +293,7 @@ input::-moz-focus-inner {
  * the UA stylesheet.
  */
 input {
-	line-height: normal
+	line-height: normal;
 
 }
 /**
@@ -307,7 +307,7 @@ input[type="checkbox"],
 input[type="radio"] {
 	box-sizing: border-box;
 	/* 1 */
-	padding: 0
+	padding: 0;
 	/* 2 */
 
 }
@@ -318,7 +318,7 @@ input[type="radio"] {
  */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-	height: auto
+	height: auto;
 
 }
 /**
@@ -330,7 +330,7 @@ input[type="search"] {
 	-webkit-appearance: textfield;
 	/* 1 */
 	/* 2 */
-	box-sizing: content-box
+	box-sizing: content-box;
 
 }
 /**
@@ -340,7 +340,7 @@ input[type="search"] {
  */
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
-	-webkit-appearance: none
+	-webkit-appearance: none;
 
 }
 /**
@@ -349,7 +349,7 @@ input[type="search"]::-webkit-search-decoration {
 fieldset {
 	border: 1px solid #c0c0c0;
 	margin: 0 2px;
-	padding: 0.35em 0.625em 0.75em
+	padding: 0.35em 0.625em 0.75em;
 
 }
 /**
@@ -359,7 +359,7 @@ fieldset {
 legend {
 	border: 0;
 	/* 1 */
-	padding: 0
+	padding: 0;
 	/* 2 */
 
 }
@@ -367,7 +367,7 @@ legend {
  * Remove default vertical scrollbar in IE 8/9/10/11.
  */
 textarea {
-	overflow: auto
+	overflow: auto;
 
 }
 /**
@@ -375,7 +375,7 @@ textarea {
  * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
  */
 optgroup {
-	font-weight: bold
+	font-weight: bold;
 
 }
 /* Tables
@@ -385,25 +385,25 @@ optgroup {
  */
 table {
 	border-collapse: collapse;
-	border-spacing: 0
+	border-spacing: 0;
 
 }
 td,
 th {
-	padding: 0
+	padding: 0;
 
 }
 /* http://www.paulirish.com/2012/box-sizing-border-box-ftw */
 *, 
 *:before, 
 *:after {
-	box-sizing: border-box
+	box-sizing: border-box;
 
 }
 /* Via https://github.com/jxnblk/basscss-base-reset */
 body,
 button {
-	margin: 0
+	margin: 0;
 
 }
 button,
@@ -411,194 +411,194 @@ input,
 select,
 textarea {
 	font-family: inherit;
-	font-size: 100%
+	font-size: 100%;
 
 }
 img {
-	max-width: 100%
+	max-width: 100%;
 
 }
 svg {
-	max-height: 100%
+	max-height: 100%;
 
 }
 /* Define colors */
 /* Foreground colors */
 .black {
-	color: #000
+	color: #000;
 
 }
 .white {
-	color: #FFF
+	color: #FFF;
 
 }
 .grey {
-	color: #EEE
+	color: #EEE;
 
 }
 .grey-light {
-	color: #AAA
+	color: #AAA;
 
 }
 .grey-lightest {
-	color: #f4f4f4
+	color: #f4f4f4;
 
 }
 .grey-dark {
-	color: #444
+	color: #444;
 
 }
 .grey-darkest {
-	color: #222
+	color: #222;
 
 }
 .blue {
-	color: #0074D9
+	color: #0074D9;
 
 }
 .blue-light {
-	color: #64a8ff
+	color: #64a8ff;
 
 }
 .blue-lightest {
-	color: #a2dfff
+	color: #a2dfff;
 
 }
 .blue-dark {
-	color: #0045a1
+	color: #0045a1;
 
 }
 .blue-darkest {
-	color: #002f86
+	color: #002f86;
 
 }
 .yellow {
-	color: #fff93c
+	color: #fff93c;
 
 }
 .yellow-light {
-	color: #fffa60
+	color: #fffa60;
 
 }
 .yellow-lightest {
-	color: #fffca6
+	color: #fffca6;
 
 }
 .yellow-dark {
-	color: #e2c100
+	color: #e2c100;
 
 }
 .yellow-darkest {
-	color: #c4a600
+	color: #c4a600;
 
 }
 .red {
-	color: #d82c2c
+	color: #d82c2c;
 
 }
 .red-light {
-	color: #f94f44
+	color: #f94f44;
 
 }
 .red-lightest {
-	color: #ff6c5c
+	color: #ff6c5c;
 
 }
 .red-dark {
-	color: #bd001a
+	color: #bd001a;
 
 }
 .red-darkest {
-	color: #9d0003
+	color: #9d0003;
 
 }
 /* Background colors */
 .bg-black {
-	background: #000
+	background: #000;
 
 }
 .bg-white {
-	background: #FFF
+	background: #FFF;
 
 }
 .bg-grey {
-	background: #EEE
+	background: #EEE;
 
 }
 .bg-grey-light {
-	background: #AAA
+	background: #AAA;
 
 }
 .bg-grey-lightest {
-	background: #f4f4f4
+	background: #f4f4f4;
 
 }
 .bg-grey-dark {
-	background: #444
+	background: #444;
 
 }
 .bg-grey-darkest {
-	background: #222
+	background: #222;
 
 }
 .bg-blue {
-	background: #0074D9
+	background: #0074D9;
 
 }
 .bg-blue-light {
-	background: #64a8ff
+	background: #64a8ff;
 
 }
 .bg-blue-lightest {
-	background: #a2dfff
+	background: #a2dfff;
 
 }
 .bg-blue-dark {
-	background: #0045a1
+	background: #0045a1;
 
 }
 .bg-blue-darkest {
-	background: #002f86
+	background: #002f86;
 
 }
 .bg-yellow {
-	background: #fff93c
+	background: #fff93c;
 
 }
 .bg-yellow-light {
-	background: #fffa60
+	background: #fffa60;
 
 }
 .bg-yellow-lightest {
-	background: #fffca6
+	background: #fffca6;
 
 }
 .bg-yellow-dark {
-	background: #e2c100
+	background: #e2c100;
 
 }
 .bg-yellow-darkest {
-	background: #c4a600
+	background: #c4a600;
 
 }
 .bg-red {
-	background: #d82c2c
+	background: #d82c2c;
 
 }
 .bg-red-light {
-	background: #f94f44
+	background: #f94f44;
 
 }
 .bg-red-lightest {
-	background: #ff6c5c
+	background: #ff6c5c;
 
 }
 .bg-red-dark {
-	background: #bd001a
+	background: #bd001a;
 
 }
 .bg-red-darkest {
-	background: #9d0003
+	background: #9d0003;
 
 }
 /* Margin and padding utilities via Tachyons
@@ -624,358 +624,358 @@ svg {
  *
 */
 .pan {
-	padding: 0
+	padding: 0;
 
 }
 .paxs {
-	padding: .25rem
+	padding: .25rem;
 
 }
 .pas {
-	padding: .5rem
+	padding: .5rem;
 
 }
 .pam {
-	padding: 1rem
+	padding: 1rem;
 
 }
 .pal {
-	padding: 2rem
+	padding: 2rem;
 
 }
 .pax {
-	padding: 4rem
+	padding: 4rem;
 
 }
 .pln {
-	padding-left: 0
+	padding-left: 0;
 
 }
 .plxs {
-	padding-left: .25rem
+	padding-left: .25rem;
 
 }
 .pls {
-	padding-left: .5rem
+	padding-left: .5rem;
 
 }
 .plm {
-	padding-left: 1rem
+	padding-left: 1rem;
 
 }
 .pll {
-	padding-left: 2rem
+	padding-left: 2rem;
 
 }
 .plx {
-	padding-left: 4rem
+	padding-left: 4rem;
 
 }
 .prn {
-	padding-right: 0
+	padding-right: 0;
 
 }
 .prxs {
-	padding-right: .25rem
+	padding-right: .25rem;
 
 }
 .prs {
-	padding-right: .5rem
+	padding-right: .5rem;
 
 }
 .prm {
-	padding-right: 1rem
+	padding-right: 1rem;
 
 }
 .prl {
-	padding-right: 2rem
+	padding-right: 2rem;
 
 }
 .prx {
-	padding-right: 4rem
+	padding-right: 4rem;
 
 }
 .pbn {
-	padding-bottom: 0
+	padding-bottom: 0;
 
 }
 .pbxs {
-	padding-bottom: .25rem
+	padding-bottom: .25rem;
 
 }
 .pbs {
-	padding-bottom: .5rem
+	padding-bottom: .5rem;
 
 }
 .pbm {
-	padding-bottom: 1rem
+	padding-bottom: 1rem;
 
 }
 .pbl {
-	padding-bottom: 2rem
+	padding-bottom: 2rem;
 
 }
 .pbx {
-	padding-bottom: 4rem
+	padding-bottom: 4rem;
 
 }
 .ptn {
-	padding-top: 0
+	padding-top: 0;
 
 }
 .ptxs {
-	padding-top: .25rem
+	padding-top: .25rem;
 
 }
 .pts {
-	padding-top: .5rem
+	padding-top: .5rem;
 
 }
 .ptm {
-	padding-top: 1rem
+	padding-top: 1rem;
 
 }
 .ptl {
-	padding-top: 2rem
+	padding-top: 2rem;
 
 }
 .ptx {
-	padding-top: 4rem
+	padding-top: 4rem;
 
 }
 .pvn {
 	padding-top: 0;
-	padding-bottom: 0
+	padding-bottom: 0;
 
 }
 .pvxs {
 	padding-top: .25rem;
-	padding-bottom: .25rem
+	padding-bottom: .25rem;
 
 }
 .pvs {
 	padding-top: .5rem;
-	padding-bottom: .5rem
+	padding-bottom: .5rem;
 
 }
 .pvm {
 	padding-top: 1rem;
-	padding-bottom: 1rem
+	padding-bottom: 1rem;
 
 }
 .pvl {
 	padding-top: 2rem;
-	padding-bottom: 2rem
+	padding-bottom: 2rem;
 
 }
 .pvx {
 	padding-top: 4rem;
-	padding-bottom: 4rem
+	padding-bottom: 4rem;
 
 }
 .phn {
 	padding-left: 0;
-	padding-right: 0
+	padding-right: 0;
 
 }
 .phxs {
 	padding-left: .25rem;
-	padding-right: .25rem
+	padding-right: .25rem;
 
 }
 .phs {
 	padding-left: .5rem;
-	padding-right: .5rem
+	padding-right: .5rem;
 
 }
 .phm {
 	padding-left: 1rem;
-	padding-right: 1rem
+	padding-right: 1rem;
 
 }
 .phl {
 	padding-left: 2rem;
-	padding-right: 2rem
+	padding-right: 2rem;
 
 }
 .phx {
 	padding-left: 4rem;
-	padding-right: 4rem
+	padding-right: 4rem;
 
 }
 .man {
-	margin: 0
+	margin: 0;
 
 }
 .maxs {
-	margin: .25rem
+	margin: .25rem;
 
 }
 .mas {
-	margin: .5rem
+	margin: .5rem;
 
 }
 .mam {
-	margin: 1rem
+	margin: 1rem;
 
 }
 .mal {
-	margin: 2rem
+	margin: 2rem;
 
 }
 .max {
-	margin: 4rem
+	margin: 4rem;
 
 }
 .mln {
-	margin-left: 0
+	margin-left: 0;
 
 }
 .mlxs {
-	margin-left: .25rem
+	margin-left: .25rem;
 
 }
 .mls {
-	margin-left: .5rem
+	margin-left: .5rem;
 
 }
 .mlm {
-	margin-left: 1rem
+	margin-left: 1rem;
 
 }
 .mll {
-	margin-left: 2rem
+	margin-left: 2rem;
 
 }
 .mlx {
-	margin-left: 4rem
+	margin-left: 4rem;
 
 }
 .mrn {
-	margin-right: 0
+	margin-right: 0;
 
 }
 .mrxs {
-	margin-right: .25rem
+	margin-right: .25rem;
 
 }
 .mrs {
-	margin-right: .5rem
+	margin-right: .5rem;
 
 }
 .mrm {
-	margin-right: 1rem
+	margin-right: 1rem;
 
 }
 .mrl {
-	margin-right: 2rem
+	margin-right: 2rem;
 
 }
 .mrx {
-	margin-right: 4rem
+	margin-right: 4rem;
 
 }
 .mbn {
-	margin-bottom: 0
+	margin-bottom: 0;
 
 }
 .mbxs {
-	margin-bottom: .25rem
+	margin-bottom: .25rem;
 
 }
 .mbs {
-	margin-bottom: .5rem
+	margin-bottom: .5rem;
 
 }
 .mbm {
-	margin-bottom: 1rem
+	margin-bottom: 1rem;
 
 }
 .mbl {
-	margin-bottom: 2rem
+	margin-bottom: 2rem;
 
 }
 .mbx {
-	margin-bottom: 4rem
+	margin-bottom: 4rem;
 
 }
 .mtn {
-	margin-top: 0
+	margin-top: 0;
 
 }
 .mtxs {
-	margin-top: .25rem
+	margin-top: .25rem;
 
 }
 .mts {
-	margin-top: .5rem
+	margin-top: .5rem;
 
 }
 .mtm {
-	margin-top: 1rem
+	margin-top: 1rem;
 
 }
 .mtl {
-	margin-top: 2rem
+	margin-top: 2rem;
 
 }
 .mtx {
-	margin-top: 4rem
+	margin-top: 4rem;
 
 }
 .mvn {
 	margin-top: 0;
-	margin-bottom: 0rem
+	margin-bottom: 0rem;
 
 }
 .mvxs {
 	margin-top: .25rem;
-	margin-bottom: .25rem
+	margin-bottom: .25rem;
 
 }
 .mvs {
 	margin-top: .5rem;
-	margin-bottom: .5rem
+	margin-bottom: .5rem;
 
 }
 .mvm {
 	margin-top: 1rem;
-	margin-bottom: 1rem
+	margin-bottom: 1rem;
 
 }
 .mvl {
 	margin-top: 2rem;
-	margin-bottom: 2rem
+	margin-bottom: 2rem;
 
 }
 .mvx {
 	margin-top: 4rem;
-	margin-bottom: 4rem
+	margin-bottom: 4rem;
 
 }
 .mhn {
 	margin-left: 0;
-	margin-right: 0
+	margin-right: 0;
 
 }
 .mhs {
 	margin-left: .5rem;
-	margin-right: .5rem
+	margin-right: .5rem;
 
 }
 .mhm {
 	margin-left: 1rem;
-	margin-right: 1rem
+	margin-right: 1rem;
 
 }
 .mhl {
 	margin-left: 2rem;
-	margin-right: 2rem
+	margin-right: 2rem;
 
 }
 .mhx {
 	margin-left: 4rem;
-	margin-right: 4rem
+	margin-right: 4rem;
 
 }
 /* Improve legibility */
@@ -983,7 +983,7 @@ html {
 	text-rendering: optimizeLegibility;
 	-webkit-font-feature-settings: kern;
 	   -moz-font-feature-settings: kern;
-	        font-feature-settings: kern
+	        font-feature-settings: kern;
 
 }
 /* Set standard typographic style */
@@ -992,32 +992,32 @@ body {
 	font-family: freight-text-pro;
 	font-weight: 400;
 	color: #444;
-	line-height: 1.5
+	line-height: 1.5;
 
 }
 /* Fluid typography */
 /* As the viewport size increases, the font-size becomes larger. */
 html {
-	font-size: 15px
+	font-size: 15px;
 
 }
 @media screen and (min-width: 40rem) {
 	html {
-		font-size: 16px
+		font-size: 16px;
 
 	}
 
 }
 @media screen and (min-width: 50rem) {
 	html {
-		font-size: 17px
+		font-size: 17px;
 
 	}
 
 }
 @media screen and (min-width: 60rem) {
 	html {
-		font-size: 18px
+		font-size: 18px;
 
 	}
 
@@ -1028,203 +1028,203 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: freight-text-pro;
 	color: #222;
 	font-weight: 500;
-	margin: 0 0 1rem
+	margin: 0 0 1rem;
 
 }
 h1, .h1 {
-	font-size: 1.777778rem
+	font-size: 1.777778rem;
 
 }
 h2, .h2 {
-	font-size: 1.333333rem
+	font-size: 1.333333rem;
 
 }
 h3, .h3 {
-	font-size: 1rem
+	font-size: 1rem;
 
 }
 h4, .h4 {
-	font-size: 1rem
+	font-size: 1rem;
 
 }
 h5, .h5 {
-	font-size: 1rem
+	font-size: 1rem;
 
 }
 h6, .h6 {
-	font-size: 1rem
+	font-size: 1rem;
 
 }
 /* Set default paragraph styles */
 p {
 	font-size: 1rem;
 	max-width: 40rem;
-	margin: 0 0 1rem 0
+	margin: 0 0 1rem 0;
 
 }
 /* Set default blockquote styles */
 blockquote {
 	font-style: italic;
-	font-size: 1rem
+	font-size: 1rem;
 
 }
 /* Typographic utility classes */
 .light {
-	font-weight: 300
+	font-weight: 300;
 
 }
 .book {
-	font-weight: 400
+	font-weight: 400;
 
 }
 .medium {
-	font-weight: 500
+	font-weight: 500;
 
 }
 .semibold {
-	font-weight: 600
+	font-weight: 600;
 
 }
 .bold {
-	font-weight: 700
+	font-weight: 700;
 
 }
 .black {
-	font-weight: 900
+	font-weight: 900;
 
 }
 .uppercase {
-	text-transform: uppercase
+	text-transform: uppercase;
 
 }
 .italic {
-	font-style: italic
+	font-style: italic;
 
 }
 /* Define default variables */
 a {
-	color: #0000ee;
+	color: #222;
 	font-weight: 500;
 	text-decoration: none;
-	transition: 0.2s ease-in
+	transition: 0.2s ease-in;
 
 }
 a:link,
 a:active
 a:visited {
-	color: #0000ee
+	color: #222;
 
 }
 a:hover {
-	color: #0080ff;
-	transition: color 0.2s ease-out
+	color: #000;
+	transition: color 0.2s ease-out;
 
 }
 /* Default variables */
 /* Unordered list elements will display circles */
 ul li {
-	list-style-type: circle
+	list-style-type: circle;
 
 }
 /* Ordered list elements will display capitalize Roman numerals */
 ol li {
-	list-style-type: upper-roman
+	list-style-type: upper-roman;
 
 }
 /* Hide list elements */
 .list-style-none {
-	list-style-type: none
+	list-style-type: none;
 
 }
 /* Hanging lists */
 /* As per http://www.markboulton.co.uk/journal/five-simple-steps-to-better-typography-part-2 */
 .hanging {
-	padding-left: 0
+	padding-left: 0;
 
 }
 /* Copied from jxnblk/basscss-base-tables */
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-	max-width: 100%
+	max-width: 100%;
 
 }
 th {
 	text-align: left;
-	font-weight: 700
+	font-weight: 700;
 
 }
 th,
 td {
-	line-height: inherit
+	line-height: inherit;
 
 }
 th {
-	vertical-align: bottom
+	vertical-align: bottom;
 
 }
 td {
-	vertical-align: top
+	vertical-align: top;
 
 }
 tr {
-	border-bottom: 2px solid #f4f4f4
+	border-bottom: 2px solid #f4f4f4;
 
 }
 /* Custom Media Queries */
 /* Responsive padding */
 /* As viewport size increases, increase body padding */
 body {
-	padding: 1em
+	padding: 1em;
 
 }
 @media (min-width: 40rem) {
 	body {
-		padding: 2rem
+		padding: 2rem;
 
 	}
 
 }
 @media (min-width: 52rem) {
 	body {
-		padding: 4rem
+		padding: 4rem;
 
 	}
 
 }
 /* Container */
 .container {
-	max-width: 40rem
+	max-width: 40rem;
 
 }
 .center {
-	margin: 0 auto
+	margin: 0 auto;
 
 }
 /* Display */
 .display-block {
-	display: block
+	display: block;
 
 }
 .display-inline {
-	display: inline
+	display: inline;
 
 }
 .display-inline-block {
-	display: inline-block
+	display: inline-block;
 
 }
 /* Alignment */
 .align-left {
-	text-align: left
+	text-align: left;
 
 }
 .align-center {
-	text-align: center
+	text-align: center;
 
 }
 .align-right {
-	text-align: right
+	text-align: right;
 
 }
 /* Default variables */
@@ -1247,14 +1247,14 @@ body {
 	        justify-content: flex-start;
 	-webkit-align-items: stretch;
 	    -ms-flex-align: stretch;
-	        align-items: stretch
+	        align-items: stretch;
 
 }
 @media (min-width: 77rem) {
 	.flex-container {
 		-webkit-flex-direction: row;
 		    -ms-flex-direction: row;
-		        flex-direction: row
+		        flex-direction: row;
 
 	}
 
@@ -1262,7 +1262,7 @@ body {
 .flex-item {
 	-webkit-flex: 1 0 auto;
 	    -ms-flex: 1 0 auto;
-	        flex: 1 0 auto
+	        flex: 1 0 auto;
 
 }
 @media (min-width: 77rem) {
@@ -1270,7 +1270,7 @@ body {
 		-webkit-flex: 1 0 0;
 		    -ms-flex: 1 0 0;
 		        flex: 1 0 0;
-		margin-right: 2rem
+		margin-right: 2rem;
 
 	}
 
@@ -1300,11 +1300,43 @@ body {
 	/* --font-weight-black: ; */
 
 	/* LINKS */
-	/* --link-color: ; */
-	/* --link-color-hover: ; */
 
 	/* LAYOUT */	
 	/* --container-width: ; */
 
 }
 
+.sans {
+    font-family: freight-sans-pro;
+}
+article {
+    text-align: justify;
+}
+
+header {
+    position: fixed;
+    top: 0;
+}
+header p {
+    background: #FF5656;
+    padding: 10px 20px;
+    font-family: freight-sans-pro;
+    transition: background 0.2s ease-in;
+}
+header p:hover { 
+    background: #FF9D56;
+    transition: background 0.2s ease-out;
+}
+
+header p a,
+header p a:hover { color: white; }
+
+
+pre {
+    background: #f3f3f3;
+    padding: 1em;
+}
+
+.light { color: #666; }
+a.alert { color: #ff5656; }
+a.alert:hover { color: #ff9d56; }

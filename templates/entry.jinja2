@@ -1,0 +1,14 @@
+{% extends 'base.jinja2' %}
+{% block body %}
+
+<article id='entry={{ entry.id }}' class='mbl'>
+    <h1 class='mbn'>
+        <a href='/post/{{ entry.id }}'>{{ entry.title }}</a> 
+        <span class='h4 light'>Written {{ entry.created.strftime('%B %d, %Y') }}</span>
+    </h1>
+    <section>
+        {{ entry.text | safe }}
+    </section>
+    <p class='edit sans'><a class='alert' href='/edit/{{ entry.id }}'>Edit</a></p>
+</article>
+{% endblock %}

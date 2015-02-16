@@ -35,11 +35,45 @@
 	/* --font-weight-black: ; */
 
 	/* LINKS */
-	/* --link-color: ; */
-	/* --link-color-hover: ; */
+	--link-color: #222;
+	--link-color-hover: #000;
 
 	/* LAYOUT */	
 	/* --container-width: ; */
 
 }
 
+.sans {
+    font-family: freight-sans-pro;
+}
+article {
+    text-align: justify;
+}
+
+header {
+    position: fixed;
+    top: 0;
+}
+header p {
+    background: #FF5656;
+    padding: 10px 20px;
+    font-family: freight-sans-pro;
+    transition: background 0.2s ease-in;
+}
+header p:hover { 
+    background: #FF9D56;
+    transition: background 0.2s ease-out;
+}
+
+header p a,
+header p a:hover { color: white; }
+
+
+pre {
+    background: #f3f3f3;
+    padding: 1em;
+}
+
+.light { color: #666; }
+a.alert { color: #ff5656; }
+a.alert:hover { color: #ff9d56; }
