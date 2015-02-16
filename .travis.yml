@@ -4,7 +4,6 @@ python:
 install: pip install -r requirements.txt
 before_script:
   - psql -c 'create user Joel with superuser;' -U postgres
-  - psql -c 'create database Joel;' -U postgres
   - psql -c 'create database test_learning_journal;' -U Joel
   - psql -U Joel -c "create extension postgis"
 script: lettuce
