@@ -6,7 +6,7 @@ from journal import DB_SCHEMA
 import pytest
 
 
-TEST_DSN = 'dbname=test_learning_journal user=Joel'
+TEST_DSN = 'dbname=test_learning_journal user=postgres'
 settings = {'db': TEST_DSN}
 INPUT_BTN = "<input class='display-block' type='submit' value='Add post' name='Add post' />"
 

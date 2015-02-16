@@ -9,7 +9,7 @@ from journal import DB_SCHEMA
 from journal import INSERT_ENTRY
 from cryptacular.bcrypt import BCRYPTPasswordManager
 
-TEST_DSN = 'dbname=test_learning_journal user=Joel'
+TEST_DSN = 'dbname=test_learning_journal user=postgres'
 
 
 def init_db(settings):
