@@ -1,0 +1,16 @@
+{% extends "base.jinja2" %}
+{% block body %}
+
+    {% if request.authenticated_userid %}
+    {% for entry in entries %}
+        <form action="{{ request.route_url('edit', id=entry.id) }}" method="POST">
+            <input class='display-block' type='text' name='title' id='title' value="{{ entry.title }}"/>
+            <textarea class='display-block' name='text' id='text'>
+                {{ entry.text }}
+            </textarea>
+            <input class='display-block' type='submit' value='Save post' name='Save post' />
+        </form>
+    {% endfor %}
+    {% endif %}
+
+{% endblock %}

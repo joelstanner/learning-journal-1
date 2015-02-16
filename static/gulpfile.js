@@ -9,7 +9,7 @@ var rename              = require('gulp-rename')
 var minify              = require('gulp-minify-css')
 
 
-gulp.task('default', function () {
+gulp.task('build', function () {
     var processors = [
         atImport(),
         fontVariants(),
@@ -24,3 +24,9 @@ gulp.task('default', function () {
         .pipe(rename('index.min.css'))
         .pipe(gulp.dest('./'))
 })
+
+gulp.task('watch', function () {
+    gulp.watch('src/*.css', ['build'])
+})
+
+gulp.task('default', ['watch'])

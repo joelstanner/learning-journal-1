@@ -4,36 +4,27 @@
         <meta charset='utf-8'>
         <title>Le' Journal</title>
         <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
-        <meta name='author' content=''>
-        <meta name="description" content="">
-        <meta name='keywords' content='' />
+        <meta name='author' content='Jacques Tardie <hi@jacquestardie.org>'>
+        <meta name='keywords' content='Python, CodeFellows, Seattle, "Jacques Tardie"' />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-        <!-- DatCSS -->
         <link rel='stylesheet' href='/static/index.min.css'>
-        <link rel='stylesheet' href='/static/style.css'>
-
-
     </head>
 
     <body>
-        <div class='container'>
-            <header>
-                <p class='button'>
-                    {% if not request.authenticated_userid %}
-                    <a href='{{ request.route_url('login') }}'>Log in</a>
-                    {% else %}
-                    <a href='{{ request.route_url('logout') }}'>Log out</a>
-                    {% endif %}
-                </p>
-            </header>
+        <header>
+            <p>
+                <a class='semibold' href='/'>Le' journal — </a>
+                {% if not request.authenticated_userid %}
+                <span><a href='{{ request.route_url('login') }}'>Login</a></span>
+                {% else %}
+                <span><a href='{{ request.route_url('logout') }}'>Logout</a></span>
+                {% endif %}
+            </p>
+        </header>
 
-            {% block body %}{% endblock %}
-        </div>
+        {% block body %}{% endblock %}
 
-        <!-- Fonts via Typekit -->
-        <script type='text/javascript' src='//use.typekit.net/miq6xoz.js'></script>
-        <script type='text/javascript'>try{Typekit.load();}catch(e){}</script>
-
+        <script src="//use.typekit.net/miq6xoz.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
     </body>
 </html>

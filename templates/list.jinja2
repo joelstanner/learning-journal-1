@@ -2,29 +2,33 @@
 
 {% block body %}
 
-<!-- <h3 class='upper mbl'><a href='/'>Le' journal</a></h3> -->
-
 {% for entry in entries %}
-<article id='entry={{ entry.id }}' class='mbl'>
-    <h2 class='mbn'><a href='{{ entry.id }}'>{{ entry.title }}</a> <span class='light h4'>{{ entry.created.strftime('%b. %d, %Y') }}</span></h2>
-    <section>
-        {{ entry.text | safe }}
-    </section>
+<article id='entry={{ entry.id }}' class='mbx'>
+    <h1 class='mbs'>
+        <a href='/post/{{ entry.id }}'>{{ entry.title }}</a>
+        <span class='h4 light'>Written {{ entry.created.strftime('%B %d, %Y') }}</span>
+    </h1>
+    <div class='mbn content'>{{ entry.text | safe }}</div>
 </article>
 {% else %}
 <div class='entry'>
-    <p>Nothin!</p>
+    <p>Zip, zero, zilch.</p>
 </div>
 {% endfor %}
 
 {% if request.authenticated_userid %}
 <aside>
     <form action="{{ request.route_url('add') }}" method="POST" class="add_entry">
-        <input class='display-block' type='text' name='title' id='title' placeholder='Post title' />
-        <textarea class='display-block' name='text' id='text' placeholder='Write your content'></textarea>
-        <input class='display-block' type='submit' value='Add post' name='Add post' />
+        <fieldset>
+            <label for="title">Title</label>
+            <input type='text' name='title' id='title' />
+
+            <label for='text'>Text</label>
+            <textarea name='text' id='text'></textarea>
+
+            <input type='submit' value='Add post' name='Add post' />
+        </fieldset>
     </form>
 </aside>
 {% endif %}
-
 {% endblock %}
