@@ -8,7 +8,7 @@ import pytest
 
 TEST_DSN = 'dbname=test_learning_journal user=Joel'
 settings = {'db': TEST_DSN}
-INPUT_BTN = '<input type="submit" value="Share" name="Share"/>'
+INPUT_BTN = "<input class='display-block' type='submit' value='Add post' name='Add post' />"
 
 
 @world.absorb
@@ -80,16 +80,16 @@ def click_on_the_entry_link(step):
     login_helper('admin', 'secret', world.app)
     world.make_an_entry(world.app)
     response = world.app.get('/')
-    response = response.click(href='detail/1')
+    response = response.click(href='/post/1')
     assert response.status_code == 200
-    assert 'class="titleDivider"' in response.body
+    assert 'This is a post' in response.body
 
 
 @step('Then I get the detail page for that entry')
 def i_get_the_detail_page(step):
-    response = world.app.get('/detail/1')
+    response = world.app.get('/post/1')
     assert response.status_code == 200
-    assert 'class="titleDivider"' in response.body
+    assert 'This is a post' in response.body
 
 
 @step('a logged in user')
@@ -104,14 +104,14 @@ def a_logged_in_user(step):
 
 @step('a journal detail page')
 def journal_detail_page(step):
-    response = world.app.get('/detail/1')
+    response = world.app.get('/post/1')
     assert response.status_code == 200
     assert 'This is a post' in response.body
 
 
 @step('I click on the edit button')
 def click_on_the_edit_button(step):
-    response = world.app.get('/detail/1')
+    response = world.app.get('/post/1')
     assert response.status_code == 200
     response = response.click(href='/edit/1')
     assert response.status_code == 200
@@ -121,7 +121,7 @@ def click_on_the_edit_button(step):
 def taken_to_the_edit_page(step):
     response = world.app.get('/edit/1')
     assert response.status_code == 200
-    assert 'id="editbtn"' in response.body
+    assert "name='Save post'" in response.body
 
 
 @step('a journal edit form')
@@ -134,7 +134,7 @@ def a_journal_edit_form(step):
 @step('I type in the edit box')
 def type_in_the_edit_box(step):
     response = world.app.get('/edit/1')
-    assert 'id="editbtn"' in response.body
+    assert "name='Save post'" in response.body
     response.form['title'] = 'Test edit'
     response.form['text'] = '''
 ```python
@@ -150,24 +150,24 @@ def type_in_the_edit_box(step):
 
 @step('I can use MarkDown to format my post')
 def use_markdown_to_format(step):
-    response = world.app.get('/detail/1')
+    response = world.app.get('/post/1')
     assert response.status_code == 200
     assert "<pre>" in response.body
 
 
 @step('a new journal detail page')
 def new_detail_page(step):
-    response = world.app.get('/detail/1')
+    response = world.app.get('/post/1')
     assert response.status_code == 200
 
 
 @step('I look at a post')
 def look_at_a_post(step):
-    response = world.app.get('/detail/1')
+    response = world.app.get('/post/1')
     assert 'Test edit' in response.body
 
 
 @step('I can see colorized code samples')
 def can_see_colorized_code(step):
-    response = world.app.get('/detail/1')
+    response = world.app.get('/post/1')
     assert '<span class="k">' in response.body
