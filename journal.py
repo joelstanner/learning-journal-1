@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
+
 import os
 import logging
 import psycopg2
 import datetime
+from datetime import date
+import markdown
+import pygments
+import jinja2
+
 from pyramid.config import Configurator
 from pyramid.session import SignedCookieSessionFactory
 from pyramid.view import view_config
@@ -16,24 +22,29 @@ from waitress import serve
 from contextlib import closing
 
 here = os.path.dirname(os.path.abspath(__file__))
-
 logging.basicConfig()
 log = logging.getLogger(__file__)
 
-# Database queries
 DB_SCHEMA = '''
-    CREATE TABLE IF NOT EXISTS entries (
-        id serial PRIMARY KEY,
-        title VARCHAR (127) NOT NULL,
-        text TEXT NOT NULL,
-        created TIMESTAMP NOT NULL
+CREATE TABLE IF NOT EXISTS entries (
+    id serial PRIMARY KEY,
+    title VARCHAR (127) NOT NULL,
+    text TEXT NOT NULL,
+    created TIMESTAMP NOT NULL
     ) '''
+
 INSERT_ENTRY = '''
-    INSERT INTO entries (title, text, created) VALUES (%s, %s, %s) '''
+INSERT INTO entries (title, text, created) VALUES (%s, %s, %s) '''
+
 DB_ENTRIES_LIST = '''
-    SELECT id, title, text, created FROM entries ORDER BY created DESC '''
+SELECT id, title, text, created FROM entries ORDER BY created DESC '''
+
 INDIVIDUAL_ENTRY = '''
-    SELECT id, title, text, created FROM entries WHERE id = %s '''
+SELECT id, title, text, created FROM entries WHERE id = %s '''
+
+
+def md(input):
+    return markdown.markdown(input)
 
 
 def connect_db(settings):
@@ -101,17 +112,31 @@ def read_entries(request):
     cur.execute(DB_ENTRIES_LIST)
     keys = ('id', 'title', 'text', 'created')
     entries = [dict(zip(keys, row)) for row in cur.fetchall()]
+    for entry in entries:
+        entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
     return {'entries': entries}
 
 
 @view_config(route_name='entry', renderer='templates/list.jinja2')
 def read_entry(request):
     id = request.matchdict.get('id', None)
-    cur = request.db.cursor()
-    cur.execute(INDIVIDUAL_ENTRY, [id])
+    cursor = request.db.cursor()
+    cursor.execute(INDIVIDUAL_ENTRY, [id])
     keys = ('id', 'title', 'text', 'created')
-    entries = [dict(zip(keys, row)) for row in cur.fetchall()]
-    return {'entries': entries}
+    entry = dict(zip(keys, cursor.fetchone()))
+    entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
+    return {'entry': entry}
+
+@view_config(route_name='edit', renderer='templates/edit.jinja2')
+def edit(request):
+    """return a list of all entries as dicts"""
+    id = request.matchdict.get('id', None)
+    cursor = request.db.cursor()
+    cursor.execute(INDIVIDUAL_ENTRY, (id,))
+    keys = ('id', 'title', 'text', 'created')
+    entry = dict(zip(keys, cursor.fetchone()))
+    entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite', 'fenced_code'])
+    return {'entry': entry}
 
 
 @view_config(route_name='add', request_method='POST')
@@ -182,10 +207,11 @@ def main():
     config.include('pyramid_jinja2')
     config.add_static_view('static', os.path.join(here, 'static'))
     config.add_route('home', '/')
-    config.add_route('add', '/add')
-    config.add_route('entry', '/post/{id}')
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
+    config.add_route('add', '/add')
+    config.add_route('entry', '/post/{id}')
+    config.add_route('edit', '/edit/{id}')
     config.scan()
 
     app = config.make_wsgi_app()
